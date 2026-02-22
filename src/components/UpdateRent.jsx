@@ -30,8 +30,8 @@ export default function UpdateRent({ user }) {
           .filter(d => d.activo !== false); // Exclude logically deleted contracts
         setContracts(data);
       } catch (err) {
-        console.error(err);
-        setError("Error al cargar los contratos.");
+        console.error("Firebase fetch error:", err);
+        setError(`Error al cargar los contratos: ${err.message || "Error desconocido"}`);
       } finally {
         setLoading(false);
       }
@@ -212,7 +212,11 @@ export default function UpdateRent({ user }) {
       <div className="form-group">
         <label>Seleccionar Contrato</label>
         {loading ? (
-          <p>Cargando contratos...</p>
+          <p style={{ color: 'var(--text-muted)' }}>Cargando contratos de la base de datos...</p>
+        ) : contracts.length === 0 ? (
+          <div style={{ padding: '1rem', backgroundColor: '#fef3c7', borderRadius: '8px', color: '#b45309' }}>
+            {error ? "No se pudieron cargar los contratos." : "No hay contratos cargados para este usuario. Por favor, crea uno primero en la pestaña 'Nuevo Contrato'."}
+          </div>
         ) : (
           <select value={selectedContractId} onChange={handleSelect}>
             <option value="">-- Elige un contrato --</option>

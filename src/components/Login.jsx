@@ -20,7 +20,7 @@ export default function Login() {
       }
     } catch (err) {
       console.error(err);
-      setError('Hubo un error al intentar iniciar sesión.');
+      setError(`Hubo un error al intentar iniciar sesión: ${err.code || err.message}`);
     } finally {
       setLoading(false);
     }

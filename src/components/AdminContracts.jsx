@@ -20,7 +20,7 @@ export default function AdminContracts({ user }) {
       setContracts(data);
     } catch (err) {
       console.error(err);
-      setError("Error al cargar los contratos.");
+      setError(`Error al cargar los contratos: ${err.message || 'Error desconocido'}`);
     } finally {
       setLoading(false);
     }
@@ -43,7 +43,7 @@ export default function AdminContracts({ user }) {
       setContracts(contracts.filter(c => c.id !== id));
     } catch (err) {
       console.error(err);
-      setError("Error al intentar borrar el contrato.");
+      setError(`Error al intentar borrar el contrato: ${err.message || 'Error desconocido'}`);
     }
   };
 
@@ -76,7 +76,7 @@ export default function AdminContracts({ user }) {
       fetchContracts();
     } catch (err) {
       console.error(err);
-      setError("Ocurrió un error al guardar los cambios.");
+      setError(`Ocurrió un error al guardar los cambios: ${err.message || 'Error desconocido'}`);
     }
   };
 

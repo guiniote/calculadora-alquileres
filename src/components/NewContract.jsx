@@ -92,8 +92,8 @@ export default function NewContract({ user }) {
         initialRent: ''
       });
     } catch (err) {
-      console.error(err);
-      setError("Hubo un error al guardar el contrato. Verifica tus permisos de red.");
+      console.error("Firebase write error:", err);
+      setError(`Hubo un error al guardar el contrato: ${err.message || 'Verifica la conexión'}`);
     } finally {
       setLoading(false);
     }
