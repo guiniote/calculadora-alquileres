@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { db } from '../firebase';
+import { db, CONTRACTS_COLLECTION } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function NewContract({ user }) {
@@ -78,7 +78,7 @@ export default function NewContract({ user }) {
         createdAt: serverTimestamp()
       };
 
-      await addDoc(collection(db, 'contracts'), contractData);
+      await addDoc(collection(db, CONTRACTS_COLLECTION), contractData);
       
       setSuccess("¡Contrato guardado exitosamente!");
       setFormData({

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { db, CONTRACTS_COLLECTION } from '../firebase';
 import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 
 export default function AdminContracts({ user }) {
@@ -12,7 +12,7 @@ export default function AdminContracts({ user }) {
   const fetchContracts = async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, 'contracts'), where('ownerEmail', '==', user.email));
+      const q = query(collection(db, CONTRACTS_COLLECTION), where('ownerEmail', '==', user.email));
       const querySnapshot = await getDocs(q);
       const data = querySnapshot.docs
         .map(d => ({ id: d.id, ...d.data() }))
@@ -37,7 +37,7 @@ export default function AdminContracts({ user }) {
     setSuccess('');
     
     try {
-      const contractRef = doc(db, 'contracts', id);
+      const contractRef = doc(db, CONTRACTS_COLLECTION, id);
       await updateDoc(contractRef, { activo: false });
       setSuccess(`Contrato borrado exitosamente.`);
       setContracts(contracts.filter(c => c.id !== id));
@@ -58,7 +58,7 @@ export default function AdminContracts({ user }) {
     setSuccess('');
 
     try {
-      const contractRef = doc(db, 'contracts', editingContract.id);
+      const contractRef = doc(db, CONTRACTS_COLLECTION, editingContract.id);
       await updateDoc(contractRef, {
         property: editingContract.property,
         tenant: editingContract.tenant,

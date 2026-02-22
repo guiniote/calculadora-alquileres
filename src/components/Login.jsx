@@ -14,7 +14,7 @@ export default function Login() {
     
     try {
       const result = await signInWithPopup(auth, provider);
-      if (!allowedEmails.includes(result.user.email)) {
+      if (!import.meta.env.DEV && !allowedEmails.includes(result.user.email)) {
         setError('Tu correo no tiene permisos para acceder a esta aplicación.');
         // App.jsx will handle the actual signout
       }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { db, CONTRACTS_COLLECTION } from '../firebase';
 import { collection, query, where, getDocs, doc, updateDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function UpdateRent({ user }) {
@@ -23,7 +23,7 @@ export default function UpdateRent({ user }) {
     const fetchContracts = async () => {
       setLoading(true);
       try {
-        const q = query(collection(db, 'contracts'), where('ownerEmail', '==', user.email));
+        const q = query(collection(db, CONTRACTS_COLLECTION), where('ownerEmail', '==', user.email));
         const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs
           .map(d => ({ id: d.id, ...d.data() }))
@@ -56,7 +56,7 @@ export default function UpdateRent({ user }) {
       setIndices(Array(contract.updateFrequency).fill(''));
       
       try {
-        const historyQ = query(collection(db, 'contracts', id, 'updatesHistory'));
+        const historyQ = query(collection(db, CONTRACTS_COLLECTION, id, 'updatesHistory'));
         const historySnapshot = await getDocs(historyQ);
         setContractHistory(historySnapshot.docs.map(d => d.data()));
       } catch (err) {
@@ -163,7 +163,7 @@ export default function UpdateRent({ user }) {
     setError('');
 
     try {
-      const contractRef = doc(db, 'contracts', selectedContract.id);
+      const contractRef = doc(db, CONTRACTS_COLLECTION, selectedContract.id);
       
       // Actualizar el contrato principal
       await updateDoc(contractRef, {
