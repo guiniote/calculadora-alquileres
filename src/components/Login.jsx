@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { auth } from '../firebase';
+import { auth, ALLOWED_EMAILS } from '../firebase';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
 export default function Login() {
@@ -10,17 +10,16 @@ export default function Login() {
     setLoading(true);
     setError('');
     const provider = new GoogleAuthProvider();
-    const allowedEmails = ['guiniote@gmail.com', 'nm.schmidt5533@gmail.com'];
     
     try {
       const result = await signInWithPopup(auth, provider);
-      if (!allowedEmails.includes(result.user.email)) {
+      if (!import.meta.env.DEV && !ALLOWED_EMAILS.includes(result.user.email)) {
         setError('Tu correo no tiene permisos para acceder a esta aplicación.');
         // App.jsx will handle the actual signout
       }
     } catch (err) {
       console.error(err);
-      setError('Hubo un error al intentar iniciar sesión.');
+      setError(`Hubo un error al intentar iniciar sesión: ${err.code || err.message}`);
     } finally {
       setLoading(false);
     }

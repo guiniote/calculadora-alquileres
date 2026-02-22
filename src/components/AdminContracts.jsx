@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { db, CONTRACTS_COLLECTION } from '../firebase';
 import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 
 export default function AdminContracts({ user }) {
@@ -12,7 +12,7 @@ export default function AdminContracts({ user }) {
   const fetchContracts = async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, 'contracts'), where('ownerEmail', '==', user.email));
+      const q = query(collection(db, CONTRACTS_COLLECTION));
       const querySnapshot = await getDocs(q);
       const data = querySnapshot.docs
         .map(d => ({ id: d.id, ...d.data() }))
@@ -20,7 +20,7 @@ export default function AdminContracts({ user }) {
       setContracts(data);
     } catch (err) {
       console.error(err);
-      setError("Error al cargar los contratos.");
+      setError(`Error al cargar los contratos: ${err.message || 'Error desconocido'}`);
     } finally {
       setLoading(false);
     }
@@ -37,13 +37,13 @@ export default function AdminContracts({ user }) {
     setSuccess('');
     
     try {
-      const contractRef = doc(db, 'contracts', id);
+      const contractRef = doc(db, CONTRACTS_COLLECTION, id);
       await updateDoc(contractRef, { activo: false });
       setSuccess(`Contrato borrado exitosamente.`);
       setContracts(contracts.filter(c => c.id !== id));
     } catch (err) {
       console.error(err);
-      setError("Error al intentar borrar el contrato.");
+      setError(`Error al intentar borrar el contrato: ${err.message || 'Error desconocido'}`);
     }
   };
 
@@ -58,7 +58,7 @@ export default function AdminContracts({ user }) {
     setSuccess('');
 
     try {
-      const contractRef = doc(db, 'contracts', editingContract.id);
+      const contractRef = doc(db, CONTRACTS_COLLECTION, editingContract.id);
       await updateDoc(contractRef, {
         property: editingContract.property,
         tenant: editingContract.tenant,
@@ -76,7 +76,7 @@ export default function AdminContracts({ user }) {
       fetchContracts();
     } catch (err) {
       console.error(err);
-      setError("Ocurrió un error al guardar los cambios.");
+      setError(`Ocurrió un error al guardar los cambios: ${err.message || 'Error desconocido'}`);
     }
   };
 
