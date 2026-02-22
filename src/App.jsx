@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { auth } from './firebase';
+import { auth, ALLOWED_EMAILS } from './firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -9,12 +9,10 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const allowedEmails = ['guiniote@gmail.com', 'nm.schmidt5533@gmail.com'];
-    
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       // Si estamos en producción y el usuario no está en la lista blanca, lo deslogueamos.
       // Si estamos en desarrollo local, dejamos pasar a cualquiera hacia test_contracts.
-      if (currentUser && !import.meta.env.DEV && !allowedEmails.includes(currentUser.email)) {
+      if (currentUser && !import.meta.env.DEV && !ALLOWED_EMAILS.includes(currentUser.email)) {
         await signOut(auth);
         setUser(null);
       } else {
