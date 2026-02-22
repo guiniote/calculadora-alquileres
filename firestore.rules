@@ -8,6 +8,7 @@ service cloud.firestore {
         request.auth.token.email == "guiniote@gmail.com"
         // Para agregar a tu novia y suegra, descomenta las líneas de abajo y poné sus correos:
         || request.auth.token.email == "nm.schmidt5533@gmail.com"
+        || request.auth.token.email == "fede.ghio.05@gmail.com"
         // || request.auth.token.email == "suegra@gmail.com"
       );
       
@@ -16,6 +17,7 @@ service cloud.firestore {
       	allow read, write: if request.auth != null && (
           request.auth.token.email == "guiniote@gmail.com"
           || request.auth.token.email == "nm.schmidt5533@gmail.com"
+          || request.auth.token.email == "fede.ghio.05@gmail.com"
           // || request.auth.token.email == "suegra@gmail.com"
         );
       }

@@ -20,4 +20,4 @@ export const db = getFirestore(app);
 export const CONTRACTS_COLLECTION = import.meta.env.DEV ? 'test_contracts' : 'contracts';
 
 // Lista de correos autorizados
-export const ALLOWED_EMAILS = ['guiniote@gmail.com', 'nm.schmidt5533@gmail.com'];
+export const ALLOWED_EMAILS = ['guiniote@gmail.com', 'nm.schmidt5533@gmail.com', 'fede.ghio.05@gmail.com'];
