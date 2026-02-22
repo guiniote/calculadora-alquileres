@@ -12,7 +12,7 @@ export default function AdminContracts({ user }) {
   const fetchContracts = async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, CONTRACTS_COLLECTION), where('ownerEmail', '==', user.email));
+      const q = query(collection(db, CONTRACTS_COLLECTION));
       const querySnapshot = await getDocs(q);
       const data = querySnapshot.docs
         .map(d => ({ id: d.id, ...d.data() }))
