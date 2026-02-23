@@ -28,3 +28,6 @@ firestore.rules
 .env
 .env.*
 !.env.example
+
+# Firebase
+.firebase/
