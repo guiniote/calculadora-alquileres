@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCFajJ6siiIIOdXb3mH_MaRNbQ8xzYTacU",
-  authDomain: "calculadora-alquileres.firebaseapp.com",
-  projectId: "calculadora-alquileres",
-  storageBucket: "calculadora-alquileres.firebasestorage.app",
-  messagingSenderId: "758455795282",
-  appId: "1:758455795282:web:ca38b9c8ad1ad90b31a98b"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
