@@ -19,5 +19,6 @@ export const db = getFirestore(app);
 // En desarrollo usamos una colección de prueba, en producción la real.
 export const CONTRACTS_COLLECTION = import.meta.env.DEV ? 'test_contracts' : 'contracts';
 
-// Lista de correos autorizados
-export const ALLOWED_EMAILS = ['guiniote@gmail.com', 'nm.schmidt5533@gmail.com'];
+// Lista de correos autorizados obtenida desde variables de entorno
+const envEmails = import.meta.env.VITE_ALLOWED_EMAILS;
+export const ALLOWED_EMAILS = envEmails ? envEmails.split(',').map(e => e.trim()) : [];
