@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Security
+firestore.rules
+.env
+.env.*
+!.env.example
